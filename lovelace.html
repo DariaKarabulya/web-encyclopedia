@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ада Лавлейс — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .sidebar .menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: 220px;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        z-index: 1000;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .sidebar .menu li {
+        margin: 0;
+      }
+
+      .sidebar .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar .menu a:hover {
+        background: #70757a;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li><a href="section2.html">Розділ 2. Народження комп'ютерної науки</a></li>
+              <li><a href="section3.html">Розділ 3. Ера персональних комп'ютерів</a></li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li><a href="section5.html">Розділ 5. Відкрите програмне забезпечення</a></li>
+              <li><a href="section6.html">Розділ 6. Сучасна цифрова епоха</a></li>
+            </ul>
+          </li>
+          
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 1 · Засновники обчислювальної техніки</p>
+          <h1>Ада Лавлейс</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src="https://content-historia.nationalgeographic.com.es/medio/2021/02/11/ada-lovelace_97dcf531_1635x2000.jpg"
+          />
+          <img
+            src="https://c02.purpledshub.com/uploads/sites/41/2018/08/47-Magdalen-College-Libraries-and-Archives-Daubeny-90.A.11-fc247cf.jpg?webp=1&w=1200"
+          />
+          <img
+            src="https://i0.wp.com/popgoesthepage.princeton.edu/wp-content/uploads/sites/152/2023/10/ada-byron-lovelace-and-the-thinking-machine-illustratio-by-april-chu_2.jpg?w=468&ssl=1"
+          />
+          <img
+            src="https://content.wolfram.com/sites/43/2015/12/ada-lovelace-at-age-20-large.jpg"
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Ада Лавлейс (Ada Lovelace, 10 грудня 1815 – 27 листопада 1852) –
+              англійська математкиня та письменниця, яка вважається першою
+              програмісткою в історії. Вона була дочкою поета Джорджа Байрона,
+              але виховувалася матір’ю, яка наполягала на вивченні математики та
+              логіки. З раннього віку Ада проявляла інтерес до наук, особливо до
+              механіки та обчислень. Вона отримала освіту від провідних
+              науковців свого часу, зокрема брала участь у роботі з Чарльзом
+              Беббіджем, який справив великий вплив на її науковий розвиток.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Перший алгоритм для обчислювальної машини</h2>
+          <article>
+            <p>
+              Ада Лавлейс стала відомою завдяки перекладу статті італійського
+              математика Луїджі Менабреа про Аналітичну машину Беббіджа. До
+              цього перекладу вона додала власні детальні коментарі, які в
+              кілька разів перевищували оригінал. Найважливішим внеском став
+              алгоритм для обчислення чисел Бернуллі — це вважається першою
+              програмою, створеною для виконання на машині. Вона передбачила, що
+              машина Беббіджа може:
+              <ul>
+                <li>Виконувати не лише обчислення, а й будь-які логічні операції;</li>
+                <li>Працювати з символами, а не тільки з числами;</li>
+                <li>Використовувати алгоритми загального призначення.</li>
+              </ul>
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Внесок у програмування</h2>
+          <article>
+            <p>
+              Ада Лавлейс фактично заклала основи сучасного програмування. Вона першою описала ідею, що комп’ютер може бути універсальною обчислювальною машиною, здатною виконувати різні типи завдань залежно від заданих інструкцій. Вона підкреслювала, що програми повинні мати чітку, логічну структуру алгоритмів, які можна записати у вигляді послідовності кроків для обробки даних. Також вона розуміла, що машина не має власного “мислення”, а лише виконує команди, які їй задає людина.
+            </p>
+
+            <p>
+              Її ідеї випередили свій час і стали основою для розвитку всієї сучасної комп’ютерної науки. Саме завдяки її роботам сформувалися ключові принципи теорії алгоритмів, з’явилося розуміння структурованого програмування та почала розвиватися концепція універсального комп’ютера, який може виконувати будь-які обчислення за правильно складеною програмою.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Вона була першою людиною, яка описала “програму” для машини ще до появи комп’ютерів.
+              </li>
+              <li>
+                Ада передбачила можливість створення штучного інтелекту.
+              </li>
+              <li>
+                Вона називала свою роботу “поетичною наукою”.
+              </li>
+              <li>
+                Її ім’ям названо мову програмування Ada.
+              </li>
+              <li>
+                Вона співпрацювала з Чарльзом Беббіджем над Аналітичною машиною.
+              </li>
+              <li>
+                Її внесок довгий час недооцінювали, і лише в XX столітті його повністю визналию
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+            <a href="C:\Users\User\Desktop\Веб-енциклопедія\сharles-babbage.html">Попередня постать: Чарльз Беббідж</a>
+          <a href="gollerit.html">Наступний розділ: Герман Голлеріт</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

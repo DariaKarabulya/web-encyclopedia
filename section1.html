@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Розділ 1 — Засновники обчислювальної техніки</title>
+  </head>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      background: #f8f9fa;
+      color: #202122;
+      line-height: 1.6;
+      font-size: 15px;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .wrapper {
+      display: flex;
+      flex: 1;
+    }
+    .sidebar {
+      width: 220px;
+      background: #54595d;
+      color: white;
+
+      padding: 24px 20px;
+    }
+
+    .sidebar h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .sidebar h1 a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .sidebar p {
+      font-size: 13px;
+      margin-bottom: 26px;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin: 16px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #a2a9b1;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 8px;
+    }
+
+    .sidebar a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      left: 10px;
+      top: 100%;
+      background: #54595d;
+      border: 1px solid #a2a9b1;
+      width: 200px;
+      z-index: 10;
+    }
+
+    .menu a {
+      display: block;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .menu a:hover {
+      background: #70757a;
+    }
+    .dropdown:hover .menu {
+      display: block;
+    }
+    .main {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 6px 56px;
+
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px 0;
+    }
+    header p {
+      font-size: 13px;
+      color: #54595d;
+      margin-bottom: 12px;
+      max-width: 700px;
+    }
+    header h1 {
+      font-size: 38px;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 0;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      font-size: 18px;
+    }
+    article {
+      padding: 15px 0;
+    }
+
+    article a {
+      color: #0645ad;
+    }
+
+    article ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    footer {
+      margin: auto 0 10px 0;
+      padding-top: 16px;
+      border-top: 1px solid #a2a9b1;
+      text-align: left;
+      color: #54595d;
+      font-size: 13px;
+    }
+    footer a {
+      font-size: 15px;
+      color: #0645ad;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    @media (max-width: 900px) {
+      .wrapper {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #a2a9b1;
+      }
+      .main {
+        padding: 20px;
+      }
+      header h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main">
+        <header>
+          <p>Розділ 1 · Засновники обчислювальної техніки</p>
+          <h1>Засновники обчислювальної техніки</h1>
+        </header>
+
+        <section>
+          <h2>Видатні діячі</h2>
+
+          <article>
+            <h3>
+              <a href="сharles-babbage.html">Чарльз Беббідж</a>
+            </h3>
+            <p>
+              Англійський математик, який створив концепцію аналітичної машини –
+              прообразу сучасного комп’ютера.
+            </p>
+          </article>
+
+          <article>
+            <h3><a href="lovelace.html">Ада Лавлейс</a></h3>
+            <p>
+              Перша програмістка світу, яка описала алгоритм для аналітичної
+              машини Беббіджа.
+            </p>
+          </article>
+
+          <article>
+            <h3><a href="gollerit.html">Герман Голлеріт</a></h3>
+            <p>
+              Винахідник табулятора та перфокарт, які автоматизували обробку
+              даних.
+            </p>
+          </article>
+        </section>
+
+        <footer>©2026 History of Computing</footer>
+      </main>
+    </div>
+  </body>
+</html>

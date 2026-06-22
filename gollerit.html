@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Герман Голлеріт — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .sidebar .menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: 220px;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        z-index: 1000;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .sidebar .menu li {
+        margin: 0;
+      }
+
+      .sidebar .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar .menu a:hover {
+        background: #70757a;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li><a href="section2.html">Розділ 2. Народження комп'ютерної науки</a></li>
+              <li><a href="section3.html">Розділ 3. Ера персональних комп'ютерів</a></li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li><a href="section5.html">Розділ 5. Відкрите програмне забезпечення</a></li>
+              <li><a href="section6.html">Розділ 6. Сучасна цифрова епоха</a></li>
+            </ul>
+          </li>
+           
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 1 · Засновники обчислювальної техніки</p>
+          <h1>Герман Голлеріт</h1>
+        </header>
+
+        <div class="image-grid">
+       
+          
+          <img src="https://historynet.com/wp-content/uploads/2019/07/AMHP-180800-CAMEO-01.jpg?resize=1162,1536"/>
+          <img src="https://assets.sutori.com/user-uploads/image/90a52f6e-7f9a-4ce9-ac80-5b70771c4ae7/80752fb15639dbcfc90393e0357aee8d.jpeg"/>
+          <img src="https://i.gremicdn.pl/image/free/64386a03880f686342c4bf394940b8d1/?t=resize:fill:1896:1186,enlarge:1"/>
+          <img src="https://assets.sutori.com/user-uploads/image/53fc476d-3c26-48ba-b930-cf8894457b15/03126946f6ca310c1e4cfba5551e7cc4.jpeg" alt="Перфокарти">
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>Герман Голлеріт (Herman Hollerith, 29 лютого 1860 – 17 листопада 1929) – американський інженер, винахідник і статистик, який зробив революцію в обробці великих масивів даних. Він народився у місті Буффало, штат Нью-Йорк, у сім’ї німецьких іммігрантів. Його батько був викладачем, тому з дитинства Герман отримав хорошу освіту та виховання, орієнтоване на точні науки.</p>
+            <p>У ранньому віці він проявляв інтерес до механіки та технічних пристроїв, часто експериментував із простими механізмами. Після школи він вступив до Колумбійської школи гірничої справи (нині Колумбійський університет), де вивчав інженерію. Там він особливо зацікавився проблемами статистики та обробки великих обсягів інформації.</p>
+            <p>Після завершення навчання Голлеріт почав працювати як інженер і консультант у різних урядових установах США. Саме під час роботи з демографічними даними він зіткнувся з проблемою: перепис населення оброблявся вручну і займав роки. Це спонукало його шукати спосіб автоматизації цього процесу.</p>
+            <p>У 1880-х роках він розпочав експерименти з електромеханічними пристроями для кодування інформації. Він розробив систему перфокарт, яка дозволяла зберігати дані у вигляді отворів, що зчитувалися машиною. Його винахід швидко привернув увагу урядових структур.</p>
+            <p>Найбільший успіх прийшов у 1890 році, коли його система була використана для перепису населення США. Завдяки його технології обробка даних стала в рази швидшою та точнішою, що принесло йому визнання і фінансовий успіх.</p>
+            <p>Пізніше він заснував власну компанію – Tabulating Machine Company, яка займалася розвитком і виробництвом машин для обробки даних. У 1911 році ця компанія об’єдналася з іншими фірмами і згодом стала частиною IBM, яка сьогодні є однією з найбільших технологічних корпорацій у світі.</p>  
+          </article>
+        </section>
+
+        <section>
+          <h2>Табулятор та перфокарти</h2>
+          <article>
+            <p>
+              Найважливішим досягненням Германа Голлеріта стало створення табулятора – електромеханічної машини для автоматичного підрахунку, сортування та аналізу статистичних даних. Основою роботи пристрою були перфокарти – спеціальні картонні картки, на яких інформація зберігалася у вигляді отворів. Кожна позиція на картці відповідала певній характеристиці, наприклад віку, статі, професії або місцю проживання людини. Під час зчитування перфокарти металеві контакти проходили через отвори, замикали електричні кола та передавали інформацію на лічильні механізми. Завдяки цьому машина могла автоматично підраховувати та групувати великі обсяги даних. Система Голлеріта була використана під час перепису населення США 1890 року. Якщо попередній перепис оброблявся майже вісім років, то нова система дозволила отримати основні результати приблизно за один рік. Це стало справжньою революцією у сфері статистики та державного управління. Успіх винаходу привернув увагу багатьох країн, і машини Голлеріта почали використовуватися в Канаді, Німеччині, Франції, Російській імперії та інших державах.
+              <p style="text-indent: 0; margin-top: 10px"><b>Переваги винаходу</b></p>
+              <ul>
+                <li>Значне скорочення часу обробки інформації;</li>
+                <li>Зменшення кількості людських помилок;</li>
+                <li>Можливість працювати з мільйонами записів;</li>
+                <li>Автоматизація статистичних розрахунків;</li>
+                <li>Зручне зберігання великих обсягів даних.</li>
+              </ul>
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Вплив на автоматизацію обробки даних</h2>
+          <article>
+            <p>
+              Винаходи Германа Голлеріта мали величезний вплив на розвиток обчислювальної техніки та інформаційних систем. Його технології стали першим практичним прикладом автоматизованої обробки великих масивів інформації. До появи табулятора більшість обчислень виконувалася вручну, що вимагало значних затрат часу та людських ресурсів. Використання перфокарт і табуляторів дало можливість швидко збирати, сортувати та аналізувати статистичні дані, значно підвищуючи ефективність роботи державних установ і підприємств. Ідеї Голлеріта стали фундаментом для подальшого розвитку обчислювальної техніки. Перфокарти протягом багатьох десятиліть використовувалися як основний носій інформації в обчислювальних машинах та перших електронних комп’ютерах. Принципи введення, зберігання та обробки даних, які він запропонував, стали важливими елементами архітектури майбутніх комп’ютерних систем. Саме тому Голлеріта часто називають одним із попередників сучасної комп’ютерної ери та одним із людей, які заклали основи розвитку інформаційних технологій.
+             </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Технологія перфокарт, запропонована Голлерітом наприкінці XIX століття, залишалася популярною аж до появи магнітних носіїв інформації.
+              </li>
+              <li>
+                Без автоматизації обробка даних перепису 1890 року могла тривати понад десять років через стрімке зростання населення країни.
+              </li>
+              <li>
+                Багато принципів роботи ранніх комп’ютерів базувалися на ідеях використання перфокарт та автоматизованого опрацювання інформації.
+              </li>
+              <li>
+                Компанія, яку створив Голлеріт, після кількох об'єднань перетворилася на корпорацію IBM – одну з найвідоміших технологічних компаній світу.
+              </li>
+              <li>
+                Саме Голлеріт першим довів, що великі масиви інформації можуть ефективно оброблятися машинами, а не вручну, що стало фундаментом для розвитку сучасних інформаційних систем.
+              </li>
+              
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+            <a href="lovelace.html">Попередня постать: Ада Лавлейс</a>
+          <a href="section2.html">Наступна розділ: Розділ 2</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

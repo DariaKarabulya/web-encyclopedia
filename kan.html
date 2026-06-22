@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Роберт Кан — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="kan.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 4. Розвиток Інтернету</p>
+          <h1>Роберт Кан</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src="https://spectrum.ieee.org/media-library/a-formal-black-and-white-portrait-of-a-man-wearing-a-suit-and-tie.png?id=51993511&width=400&quality=85"
+          />
+          <img
+            src=" https://spectrum.ieee.org/media-library/two-men-wearing-medals-on-striped-ribbons-around-their-necks-chat-with-president-bill-clinton.png?id=52031171&width=400&quality=85"
+          />
+          <img
+            src=" https://tecnovedosos.com/wp-content/uploads/2022/08/Vinton-Cerf-y-Robert-E.-Kahn.jpg "
+          />
+          <img
+            src=" https://spectrum.ieee.org/media-library/at-left-a-bespectacled-man-in-a-blue-shirt-and-dark-tie-at-right-a-hand-drawn-diagram-that-includes-4-circles-and-4-square-conn.jpg?id=34148521&width=2400&height=1799"
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Роберт Елліот Кан – американський інженер, науковець і один із
+              піонерів розвитку комп’ютерних мереж, який народився 23 грудня
+              1938 року в Брукліні, Нью-Йорк, США. З раннього віку він цікавився
+              математикою, електронікою та новими технологіями, що згодом
+              привело його до кар'єри в галузі комп’ютерних наук. У 1960 році
+              Кан здобув ступінь бакалавра з електротехніки в Міському коледжі
+              Нью-Йорка, а пізніше отримав ступені магістра та доктора наук у
+              Принстонському університеті. Після завершення навчання він
+              працював у кількох дослідницьких центрах, займаючись питаннями
+              передачі даних і телекомунікацій.
+            </p>
+            <p>
+              На початку 1970-х років Роберт Кан приєднався до агентства ARPA
+              (нині DARPA), де керував проєктами зі створення комп’ютерних
+              мереж. Саме там він почав працювати над ідеєю об'єднання різних
+              мереж у єдину систему зв'язку. Під час роботи в ARPA Кан
+              познайомився з Вінтоном Серфом, і їхня співпраця стала одним із
+              найважливіших етапів в історії розвитку Інтернету. Разом вони
+              створили технічні рішення, які дозволили комп'ютерам у всьому
+              світі обмінюватися інформацією незалежно від типу мережі чи
+              обладнання. За свій внесок у розвиток інформаційних технологій
+              Роберт Кан отримав численні міжнародні нагороди та визнання.
+              Сьогодні його вважають одним із головних архітекторів сучасного
+              Інтернету.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Архітектура мережевих комунікацій</h2>
+          <article>
+            <p>
+              Роберт Кан відіграв ключову роль у створенні принципів, на яких
+              базується сучасна мережна взаємодія між комп’ютерами. У той час
+              існувало багато окремих мереж, які використовували різні стандарти
+              й не могли ефективно обмінюватися інформацією між собою. Кан
+              запропонував концепцію відкритої архітектури мереж, згідно з якою
+              кожна мережа могла зберігати власну внутрішню структуру, але при
+              цьому взаємодіяти з іншими через спільні протоколи передачі даних.
+              Такий підхід дозволив об'єднати численні локальні мережі в одну
+              глобальну систему.
+            </p>
+            <p>
+              Він також працював над технологіями пакетної передачі даних, коли
+              інформація розбивається на невеликі пакети та надсилається різними
+              маршрутами до місця призначення. Цей принцип став основою
+              ефективної роботи Інтернету. Завдяки розробленій архітектурі стало
+              можливим створення масштабованої мережі, яка могла розширюватися
+              без втрати працездатності. Саме тому сучасний Інтернет здатний
+              об'єднувати мільярди пристроїв по всьому світу.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Співавтор TCP/IP</h2>
+          <article>
+            <p>
+              Найвідомішим досягненням Роберта Кана стала спільна робота з
+              Вінтоном Серфом над створенням протоколів TCP/IP. У 1973 році вони
+              розпочали дослідження, спрямовані на розробку універсальної
+              системи обміну даними між різними комп’ютерними мережами.
+              Результатом цієї роботи стало створення протоколів TCP
+              (Transmission Control Protocol) та IP (Internet Protocol). TCP
+              відповідає за надійну передачу інформації та контроль помилок, а
+              IP забезпечує адресацію та маршрутизацію пакетів даних мережею.
+            </p>
+
+            <p>
+              У 1974 році Кан і Серф опублікували наукову статтю, в якій описали
+              принципи роботи нової мережевої архітектури. Їхні ідеї стали
+              фундаментом для подальшого розвитку Інтернету. 1 січня 1983 року
+              мережа ARPANET офіційно перейшла на використання TCP/IP, що
+              вважається однією з найважливіших подій в історії Інтернету.
+              Відтоді ці протоколи стали світовим стандартом мережевого зв'язку.
+              Завдяки роботі Роберта Кана та Вінтона Серфа сучасний Інтернет
+              отримав надійну технічну основу, яка використовується мільярдами
+              пристроїв і сьогодні.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                У 2004 році Кан та Серф отримали престижну Премія Тюрінга за
+                створення основ Інтернету.
+              </li>
+              <li>
+                Він був одним із засновників Corporation for National Research
+                Initiatives, що займається розвитком інформаційних технологій.
+              </li>
+              <li>
+                Роберт Кан здобув ступінь доктора електротехніки в
+                Принстонському університеті.
+              </li>
+              <li>
+                До роботи над Інтернетом Кан займався дослідженнями у сфері
+                телекомунікаційних систем.
+              </li>
+              <li>
+                У 2005 році отримав Президентську медаль Свободи — одну з
+                найвищих цивільних нагород США
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="vinton.html">Попередня постать: Вінтон Серф</a>
+          <a href="berners-li.html">Наступний розділ: Тім Бернерс-Лі </a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

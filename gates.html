@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Білл Гейтс — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 3. Ера персональних комп'ютерів</p>
+          <h1>Білл Гейтс</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src=" https://t.ctcdn.com.br/UF4IuLBawQd4N_Uld8Mm_gvIfNo=/87x54:1345x762/1024x576/smart/i338827.jpeg"
+            alt=" "
+          />
+          <img
+            src=" https://i.pinimg.com/originals/87/1b/67/871b67b752f96baa42381dd293d6d5d3.jpg"
+          />
+          <img
+            src=" https://assets.newsweek.com/wp-content/uploads/2025/08/365443-rtxfua6.jpg?w=1600&quality=80&webp=1"
+          />
+          <img
+            src="https://imageio.forbes.com/specials-images/imageserve/1040713592/0x0.jpg?width=960&dpr=1.5 "
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Білл Гейтс (повне ім’я – Вільям Генрі Гейтс III) народився 28
+              жовтня 1955 року в місті Сіетл, США, у родині адвоката та
+              бізнесвумен. З раннього віку він проявляв високі здібності до
+              логіки, математики та вирішення складних задач. Навчався в
+              престижній школі Lakeside School, де вперше отримав доступ до
+              комп’ютера. Саме там він почав програмувати у підлітковому віці та
+              створив свої перші програми разом із друзями. Уже тоді Гейтс
+              проводив багато часу за комп’ютером, іноді навіть ночами,
+              вдосконалюючи свої навички.
+            </p>
+            <p>
+              У 1973 році він вступив до Гарвардського університету, де вивчав
+              математику та інформатику. Однак навчання не стало його головним
+              пріоритетом – разом із другом дитинства Полом Алленом він активно
+              розвивав ідеї власної компанії. У 1975 році Гейтс залишив Гарвард,
+              вирішивши повністю зосередитися на розвитку програмного
+              забезпечення. Важливим моментом його ранньої кар’єри стало
+              знайомство з мікрокомп’ютером Altair 8800. Саме для нього Гейтс і
+              Аллен створили інтерпретатор мови BASIC, який став першим
+              комерційним успіхом і відкрив шлях до створення компанії
+              Microsoft.
+            </p>
+            <p>
+              У 1980-х роках Гейтс активно розвивав бізнес-стратегію компанії,
+              уклавши ключову угоду з IBM щодо операційної системи MS-DOS. Це
+              рішення стало переломним моментом, який забезпечив Microsoft
+              провідну позицію на ринку програмного забезпечення. З часом Білл
+              Гейтс став одним із найвпливовіших підприємців у світі,
+              перетворивши Microsoft на глобальну технологічну корпорацію та
+              зробивши персональні комп’ютери масовим явищем.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Заснування Microsoft</h2>
+          <article>
+            <p>
+              Ідея створення компанії Microsoft виникла у Білла Гейтса та його
+              друга Пола Аллена ще в середині 1970-х років, коли почали
+              з’являтися перші персональні комп’ютери. Вони побачили, що
+              майбутнє обчислювальної техніки залежить не лише від «заліза», а й
+              від програмного забезпечення, яке робить комп’ютери корисними для
+              користувачів. У 1975 році друзі отримали можливість попрацювати з
+              мікрокомп’ютером Altair 8800. Саме для нього вони створили
+              інтерпретатор мови програмування BASIC. Це програмне забезпечення
+              стало першим комерційним продуктом, який вони продали компанії
+              MITS, виробнику Altair. Успіх цього проєкту став поштовхом до
+              офіційного заснування власної фірми.
+            </p>
+
+            <p>
+              4 квітня 1975 року Білл Гейтс і Пол Аллен заснували компанію під
+              назвою Microsoft (від слів “microcomputer” і “software”). Спочатку
+              це була невелика команда ентузіастів, яка працювала над створенням
+              програм для нових комп’ютерів, що тільки виходили на ринок. Перші
+              роки діяльності компанії були пов’язані з розробкою мов
+              програмування та програмного забезпечення для різних комп’ютерних
+              систем. Microsoft швидко здобула репутацію надійного розробника,
+              який створює ефективні та універсальні рішення для різних
+              платформ.
+            </p>
+            <p>
+              Справжній прорив стався на початку 1980-х років, коли Microsoft
+              уклала контракт з IBM на створення операційної системи для їхніх
+              персональних комп’ютерів. Результатом стала MS-DOS — система, яка
+              стала стандартом для ПК і принесла компанії світову популярність
+              та фінансовий успіх. Завдяки цьому Microsoft перетворилася з
+              маленького стартапу на одну з найвпливовіших технологічних
+              компаній у світі, заклавши основу для розвитку сучасної індустрії
+              програмного забезпечення.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Роль у поширенні персональних комп’ютерів</h2>
+          <article>
+            <p>
+              Білл Гейтс відіграв важливу роль у популяризації персональних
+              комп’ютерів у всьому світі. Завдяки програмному забезпеченню
+              Microsoft комп’ютери стали більш доступними та зручними для
+              звичайних користувачів, а не лише для інженерів чи науковців.
+            </p>
+            <p>
+              Операційна система Windows зробила інтерфейс комп’ютера простим і
+              зрозумілим, що значно розширило ринок ПК у 1990-х роках. Це
+              сприяло тому, що комп’ютери стали масовим інструментом для роботи,
+              навчання та розваг.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Гейтс розпочав програмування ще в підлітковому віці в школі
+                Lakeside.
+              </li>
+              <li>
+                Він залишив Гарвардський університет, щоб повністю зайнятися
+                розвитком Microsoft.
+              </li>
+              <li>
+                Гейтс є співзасновником благодійного фонду Gates Foundation,
+                створеного у 2000 році.
+              </li>
+              <li>
+                У 2008 році Гейтс перейшов від щоденної роботи в Microsoft до
+                благодійної діяльності.
+              </li>
+              <li>
+                Сьогодні він займається інвестиціями та проєктами у сфері
+                клімату, медицини та освіти.
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="vozniak.html">Попередня постать: Стів Возняк</a>
+          <a href="section4.html">Наступна розділ: Розділ 4</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

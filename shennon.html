@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Клод Шеннон — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      /* MODAL */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки
+                </a>
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 2. Народження комп'ютерної науки</p>
+          <h1>Клод Шеннон</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src="https://habrastorage.org/webt/by/tv/3o/bytv3oczwa1rnbbkl7jaacgxzgs.jpeg"
+          />
+          <img
+            src="https://www.cossa.ru/upload/medialibrary/7b6/Shannon_2.jpg"
+          />
+          <img
+            src="https://science.mit.edu/wp-content/uploads/2019/06/ClaudeShannon-239x300.jpg"
+          />
+          <img
+            src="https://external-preview.redd.it/how-claude-shannon-invented-the-future-v0-MatIy1looMFAr4Jb97j5fOFqPXc5vk0Rs1anM52ycO0.jpg?auto=webp&s=2319b69ff445c2999a76b772bba21cf0592ed206"
+            alt=""
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Клод Елвуд Шеннон (1916–2001) – американський математик, інженер
+              та криптограф, якого вважають засновником теорії інформації. Він
+              народився в штаті Мічиган (США) і з раннього віку проявляв інтерес
+              до техніки: конструював моделі механізмів, радіосхеми та прості
+              автоматичні пристрої. Навчався в Університеті Мічигану, де
+              одночасно вивчав математику та електротехніку – поєднання, яке
+              пізніше стало ключовим у його науковій кар’єрі. Після цього
+              продовжив навчання в Массачусетському технологічному інституті
+              (MIT), де працював над дослідженнями, що пов’язували логіку з
+              електричними схемами.
+            </p>
+
+            <p>
+              У 1937 році він написав магістерську роботу, в якій показав, що
+              логічні операції можна реалізувати за допомогою електричних реле.
+              Ця ідея стала фундаментом для цифрових комп’ютерів. Під час Другої
+              світової війни Шеннон працював у Bell Labs, де займався
+              криптографією та захищеним зв’язком. Його дослідження допомогли
+              розвинути методи шифрування та передачі інформації.
+            </p>
+
+            <p>
+              У 1948 році він опублікував свою знамениту працю «A Mathematical
+              Theory of Communication», яка фактично започаткувала сучасну
+              теорію інформації і змінила розвиток телекомунікацій та
+              комп’ютерних наук.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Теорія інформації</h2>
+          <article>
+            <p>
+              Теорія інформації була створена Клодом Шенноном у 1948 році й
+              стала основою всієї сучасної цифрової епохи. Вона описує
+              інформацію не як абстрактне поняття, а як вимірювану величину, яку
+              можна кодувати, передавати, зберігати та відновлювати. Одним із
+              ключових внесків Шеннона стало введення поняття біта – найменшої
+              одиниці інформації, яка може мати значення 0 або 1. Це дозволило
+              перейти від аналогових методів обробки даних до цифрових систем,
+              де вся інформація представлена у вигляді двійкового коду.
+            </p>
+            <p>
+              Теорія інформації також визначає, як ефективно передавати дані
+              через канали зв’язку. Шеннон показав, що будь-який канал має свою
+              максимальну пропускну здатність, яку називають “межа Шеннона”.
+              Якщо швидкість передачі перевищує цю межу, інформація починає
+              втрачатися або спотворюватися. Важливою частиною теорії є поняття
+              ентропії інформації – міри невизначеності або “кількості сюрпризу”
+              в повідомленні. Чим менш передбачуване повідомлення, тим більше
+              інформації воно містить.
+            </p>
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Його теорія стала основою для:</b>
+            </p>
+            <ul>
+              <li>Інтернету;</li>
+              <li>Мобільного зв’язку;</li>
+              <li>Цифрового телебачення;</li>
+              <li>Комп’ютерних мереж;</li>
+              <li>Сучасних алгоритмів стиснення (ZIP, MP3, відеокодеки).</li>
+            </ul>
+          </article>
+        </section>
+
+        <section>
+          <h2>Двійкова система та цифровий зв’язок</h2>
+          <article>
+            <p>
+              Двійкова система числення – це позиційна система, у якій усі числа
+              записуються лише за допомогою двох символів: 0 і 1. Вона лежить в
+              основі сучасних цифрових технологій, адже саме у двійковій формі
+              комп’ютери кодують, зберігають і обробляють інформацію.
+            </p>
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Принцип роботи</b>
+            </p>
+            <p>
+              Кожен розряд числа в двійковій системі має вагу, що дорівнює
+              степеню двійки (1, 2, 4, 8 тощо). Наприклад, число 1011₂
+              відповідає десятковому 11, оскільки 1×8 + 0×4 + 1×2 + 1×1 = 11.
+              Цей простий принцип полегшує апаратну реалізацію у вигляді
+              електричних сигналів «ввімкнено/вимкнено».
+            </p>
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Значення для цифрової техніки</b>
+            </p>
+            <p>
+              Двійкова система є універсальною мовою комп’ютерів. Усі логічні
+              операції, програми й дані кодуються у вигляді послідовностей
+              бітів. Такий підхід забезпечує високу надійність та ефективність
+              електронних схем, що працюють у режимі «0» або «1».
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Шеннон дуже любив жонглювання і навіть створював власні
+                механічні пристрої для тренування координації.
+              </li>
+              <li>
+                Він сконструював одну з перших машин, що вміла грати в шахи, ще
+                до появи сучасних комп’ютерів.
+              </li>
+              <li>
+                Його стаття 1948 року настільки вплинула на науку, що її
+                називають “інформаційною революцією”.
+              </li>
+              <li>
+                Саме Шеннон одним із перших запропонував ідею, що будь-яку
+                інформацію можна звести до 0 і 1.
+              </li>
+              <li>
+                Він працював у Bell Labs — одній із найвпливовіших дослідницьких
+                лабораторій XX століття.
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="fon-neyman.html">Попередня постать: Джон фон Нейман</a>
+          <a href="section3.html">Наступна розділ: Розділ 3</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

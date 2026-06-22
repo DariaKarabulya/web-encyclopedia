@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ілон Маск — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 6. Сучасна цифрова епоха</p>
+          <h1>Ілон Маск</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src=" https://qz.com/cdn-cgi/image/width=1920,quality=85,format=auto/https://assets.qz.com/media/382477d27306928ce4d2e875e2f8168e.jpg"
+          />
+          <img
+            src="https://static.tildacdn.com/tild3230-3039-4534-b239-353533383339/_.jpeg "
+          />
+          <img
+            src=" https://d12d6l12s3d372.cloudfront.net/Space_X_F_e35cda5f9e.jpg"
+          />
+          <img
+            src=" https://www.insidehook.com/wp-content/uploads/2022/01/elon-musk-tesla-cybertruck.jpg?fit=1200%2C800"
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Ілон Рів Маск народився 28 червня 1971 року в Преторії,
+              Південно-Африканська Республіка, у сім’ї інженера та моделі. З
+              раннього віку він був замкненим, але дуже допитливим і проводив
+              багато часу за читанням наукової фантастики та технічних
+              енциклопедій. У дитинстві він почав програмувати самостійно та вже
+              у 12 років створив свою першу відеогру “Blastar”, яку продав
+              приблизно за 500 доларів. Це стало його першим кроком у світ
+              технологій і підприємництва. Шкільні роки Маска були непростими:
+              він часто зосереджувався на навчанні та технологіях, а не на
+              соціальному житті, що зробило його більш самостійним і
+              сфокусованим на майбутніх проєктах.
+            </p>
+            <p>
+              Після школи він переїхав до Канади, отримав громадянство і вступив
+              до University of Pennsylvania, де вивчав фізику та економіку. Це
+              поєднання науки та бізнесу сильно вплинуло на його подальший стиль
+              мислення. Після навчання він недовго навчався у Стенфордському
+              університеті, але залишив його буквально через два дні, щоб
+              зайнятися інтернет-бізнесом
+            </p>
+            <p>
+              у період буму доткомів. У 1995 році він разом із братом заснував
+              свою першу компанію Zip2, яка створювала онлайн-карти та
+              бізнес-каталоги для газет. Це стало першим великим комерційним
+              успіхом Маска. Після продажу Zip2 він створив X.com –
+              онлайн-банківську платформу, яка згодом перетворилася на PayPal
+              після злиття з іншими компаніями. Отримані кошти він використав
+              для створення нових амбітних проєктів, що стали основою його
+              кар’єри у технологічній індустрії: космос, електромобілі, штучний
+              інтелект і нейротехнології.
+            </p>
+            <p>
+              Сьогодні Маск є однією з найвпливовіших постатей у світі
+              технологій і підприємництва, відомою своїм прагненням змінити
+              транспорт, енергетику та навіть майбутнє людства через технології.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Інноваційні технологічні проєкти</h2>
+          <article>
+            <p>
+              Одним із перших успішних проєктів Маска стала компанія Zip2, яка
+              займалася цифровими картами та бізнес-каталогами. Пізніше він
+              заснував X.com – фінансову платформу, яка згодом стала частиною
+              платіжної системи PayPal. Найвідомішою його компанією є Tesla, яка
+              революціонізувала ринок електромобілів і зробила їх масовим
+              продуктом.
+            </p>
+            <p>
+              Він також є засновником компанії SpaceX, яка займається розвитком
+              космічних технологій, включаючи багаторазові ракети та місії на
+              орбіту.
+            </p>
+
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Серед інших проєктів:</b>
+            </p>
+            <ul>
+              <li>Starlink – глобальний інтернет через супутники;</li>
+              <li>Neuralink – інтерфейси мозок-комп’ютер;</li>
+              <li>The Boring Company – транспортні тунелі нового покоління;</li>
+              <li>X (social network) – платформа для комунікації та медіа;</li>
+            </ul>
+          </article>
+        </section>
+
+        <section>
+          <h2>Внесок у розвиток цифрових технологій</h2>
+          <article>
+            <p>
+              Ілон Маск зробив значний вплив на розвиток сучасних цифрових і
+              технологічних систем. Його компанії поєднують програмне
+              забезпечення, штучний інтелект, робототехніку та інженерію. Tesla
+              розвинула не лише електромобілі, а й програмні системи автономного
+              керування, що базуються на штучному інтелекті. SpaceX змінила
+              підхід до космічних запусків, зробивши їх багаторазовими, що
+              суттєво знизило вартість космічних місій.
+            </p>
+
+            <p>
+              Проєкт Starlink забезпечує доступ до інтернету у віддалених
+              регіонах, що змінює глобальну цифрову інфраструктуру. Крім того,
+              Маск активно впливає на розвиток штучного інтелекту, автономних
+              систем і цифрових комунікацій, зокрема через участь у компанії
+              OpenAI у її ранньому етапі розвитку. Його діяльність зробила
+              значний внесок у прискорення технологічного прогресу в сферах
+              транспорту, космосу, енергетики та цифрових технологій у цілому.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Ілон Маск створив свою першу відеогру “Blastar” у 12 років і
+                продав її приблизно за 500 доларів.
+              </li>
+              <li>
+                У дитинстві він багато читав, зокрема наукову фантастику, що
+                сильно вплинуло на його ідеї про майбутнє.
+              </li>
+              <li>
+                Його перша велика компанія Zip2 була продана майже за 300
+                мільйонів доларів.
+              </li>
+              <li>
+                Маск короткий час навчався у Стенфордському університеті, але
+                залишив його через два дні, щоб зайнятися бізнесом.
+              </li>
+              <li>
+                Він став мільйонером ще до 30 років завдяки раннім
+                інтернет-проєктам.
+              </li>
+              <li>
+                Маск також просуває ідею колонізації Марса як довгострокову мету
+                людства.
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="tsukerberg.html">Попередня постать: Марк Цукерберг</a>
+          <a href="altman.html">Наступний розділ: Сем Альтман</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

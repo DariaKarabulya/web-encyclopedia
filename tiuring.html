@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Алан Тюрінг — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      /* MODAL */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 2 · Народження комп'ютерної науки</p>
+          <h1>Алан Тюрінг</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src="data:image/jpeg;base64,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"
+          />
+          <img
+            src="https://i.guim.co.uk/img/media/deb155cc1f84153eb95773c5efe38f0014c2a74d/59_132_1849_1109/master/1849.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=7095aabd818c79fdaf12791137d52418"
+          />
+          <img
+            src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*SI-35G-ITVZMXEEfkjNZ3w.jpeg"
+          />
+          <img
+            src="https://media.wired.com/photos/593233f55c4fbd732b5512f9/master/w_1024,c_limit/Christopher-Display-at-Bletchley.jpg"
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Алан Матісон Тюрінг (1912–1954) – британський математик, логік і
+              криптоаналітик, один із засновників сучасної інформатики.
+              Народився в Лондоні, з дитинства проявляв сильні здібності до
+              математики та логічного мислення. Навчався в Кембриджському
+              університеті, де почав формувати ідеї, що згодом стали основою
+              теорії алгоритмів і обчислюваності. У 1936 році він опублікував
+              працю «On Computable Numbers», у якій описав концепцію
+              універсальної обчислювальної машини – прообразу сучасного
+              комп’ютера.
+            </p>
+            <p>
+              Під час Другої світової війни Тюрінг працював у Блечлі-Парку, де
+              займався дешифруванням німецьких кодів. Він відіграв ключову роль
+              у зламі шифру «Енігма» та створенні машини «Bombe», яка
+              автоматизувала розшифрування. Після війни працював над розробкою
+              ранніх комп’ютерів і досліджував штучний інтелект. У 1950 році
+              запропонував відомий Тест Тюрінга, що оцінює здатність машини
+              імітувати людське мислення. Його роботи стали фундаментом сучасної
+              інформатики, хоча життя вченого трагічно обірвалося у 1954 році.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Машина Тюрігна</h2>
+          <article>
+            <p>
+              Машина Тюрінга – це абстрактна математична модель обчислень,
+              створена для формалізації поняття алгоритму. Запропонована
+              британським математиком Алан Тюрінг у 1936 році, вона є
+              фундаментальною моделлю в теорії обчислювальності та інформатики.
+            </p>
+
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Концепція та структура</b>
+            </p>
+            <p>
+              Машина Тюрінга складається з нескінченної стрічки, розбитої на
+              комірки, де можуть бути записані символи; головки читання-запису,
+              що рухається стрічкою; та скінченного набору станів. Кожен крок
+              роботи машини визначається таблицею переходів, яка описує, як
+              змінюються стан і символ залежно від поточного стану та вмісту
+              комірки.
+            </p>
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Теоретичне значення</b>
+            </p>
+            <p>
+              Модель Тюрінга демонструє, що будь-який алгоритм, який може бути
+              формально описаний, може бути реалізований на машині цього типу.
+              Вона визначає межі того, що в принципі можна обчислити – поняття
+              обчислюваності. На її основі формулюється теза Черча–Тюрінга, що
+              ототожнює поняття «обчислюваного» з тим, що може бути виконане
+              машиною Тюрінга.
+            </p>
+
+            <p style="text-indent: 0; margin-top: 10px">
+              <b>Значення для науки</b>
+            </p>
+            <p>
+              Машина Тюрінга стала центральним інструментом у розвитку теорії
+              алгоритмів, штучного інтелекту та програмування. Вона також
+              вплинула на філософські уявлення про природу мислення, обчислень і
+              межі людського пізнання.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Тест Тюрінга</h2>
+          <article>
+            <p>
+              Тест Тюрінга – це експеримент, запропонований Тюрінгом у 1950 році
+              для визначення здатності машини демонструвати інтелект, подібний
+              до людського. У класичній формі людина-експерт веде текстову
+              розмову з двома співрозмовниками – людиною і машиною і має
+              визначити, хто є хто.
+            </p>
+
+            <p>
+              Якщо машина здатна переконливо імітувати людину настільки, що її
+              неможливо відрізнити, вона вважається такою, що «проходить тест».
+              Ця ідея стала основою сучасних досліджень штучного інтелекту.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Внесок у криптографію</h2>
+          <article>
+            <p>
+              Найвідоміший практичний внесок Тюрінга – його робота в
+              криптографії під час Другої світової війни. Він очолив розробку
+              методів дешифрування німецьких кодів, зокрема вдосконалив
+              електромеханічну машину «Bombe», яка автоматизувала пошук
+              налаштувань шифру «Енігма». Його методи аналізу значно вплинули на
+              розвиток сучасної криптографії та кібербезпеки. Багато принципів,
+              які він застосовував, сьогодні використовуються в алгоритмах
+              шифрування та захисту даних.
+            </p>
+          </article>
+        </section>
+
+        <footer>
+          <a href="fon-neyman.html">Наступна постать: Джон фон Нейман</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

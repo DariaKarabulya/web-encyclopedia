@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сем Альтман — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 6. Сучасна цифрова епоха</p>
+          <h1>Сем Альтман</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src=" https://fortune.com/img-assets/wp-content/uploads/2025/01/GettyImages-2174798091-e1737054620933.jpg?format=webp&w=768&q=100"
+          />
+          <img
+            src=" https://cdn.mos.cms.futurecdn.net/pCjhzKM89dXsokw7uMzeaK-1024-80.jpg.webp"
+          />
+          <img
+            src="https://www.hindustantimes.com/ht-img/img/2026/02/20/550x309/INDIA-AI-SUMMIT-56_1771550608065_1771550614009.jpg "
+          />
+          <img
+            src="https://i.insider.com/68dc5bbb5dbc4fd10da9e7cd?width=1300&format=jpeg&auto=webp "
+            alt=" "
+          />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Семюел Альтман народився 22 квітня 1985 року в Чикаго, США, у
+              родині лікаря та фахівця з медицини. З дитинства він проявляв
+              сильний інтерес до комп’ютерів, технологій та підприємництва, а
+              також рано почав вивчати програмування. У шкільні роки він вже
+              активно працював із комп’ютерами та цікавився тим, як технології
+              можуть змінювати бізнес і суспільство. Це сформувало його
+              майбутній інтерес до стартапів і інновацій.
+            </p>
+            <p>
+              Пізніше він вступив до Stanford University, де вивчав інформатику.
+              Однак навчання він не завершив, вирішивши зосередитися на розвитку
+              власних технологічних проєктів. Його першим відомим стартапом
+              стала компанія Loopt – мобільний сервіс геолокації, який дозволяв
+              користувачам бачити, де знаходяться їхні друзі в реальному часі.
+              Хоча компанія не стала масовим глобальним продуктом, вона
+              привернула увагу інвесторів і стала важливим кроком у його
+              кар’єрі.
+            </p>
+            <p>
+              Після продажу Loopt Альтман почав активно працювати як інвестор і
+              підприємець у Кремнієвій долині, підтримуючи перспективні
+              стартапи, особливо у сфері технологій та штучного інтелекту.
+              Згодом він став президентом акселератора Y Combinator, де
+              допомагав розвивати сотні стартапів, що згодом стали відомими
+              технологічними компаніями. З часом його діяльність все більше
+              зосереджувалася на розвитку штучного інтелекту, що привело його до
+              керівної ролі в OpenAI.
+            </p>
+            <p>
+              Сьогодні Сем Альтман є однією з ключових фігур у сфері AI, яка
+              впливає на розвиток сучасних технологій, бізнесу та цифрової
+              економіки.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Розвиток штучного інтелекту</h2>
+          <article>
+            <p>
+              Сем Альтман активно долучився до розвитку штучного інтелекту як
+              інвестор і керівник ще до того, як ця галузь стала масовою. Він
+              підтримував ідею, що AI може стати ключовою технологією XXI
+              століття, яка змінить економіку, освіту та науку. Під його впливом
+              прискорився розвиток великих мовних моделей і генеративного
+              штучного інтелекту, які здатні створювати тексти, зображення, код
+              і навіть аналізувати складні дані. Це стало новим етапом у
+              розвитку цифрових технологій. Він також наголошував на важливості
+              безпеки штучного інтелекту, підкреслюючи, що такі системи повинні
+              розвиватися контрольовано, з урахуванням етичних норм і ризиків
+              для суспільства.
+            </p>
+
+            <p>
+              Після приходу до керівництва OpenAI Альтман зосередився на
+              масштабуванні AI-моделей і їх доступності для звичайних
+              користувачів, бізнесу та освіти. Він підтримував перехід від
+              простих алгоритмів до великих нейронних мереж, які навчаються на
+              величезних обсягах даних і можуть виконувати складні когнітивні
+              завдання. Завдяки цьому підходу сучасні AI-системи стали
+              використовуватися у багатьох сферах: програмуванні, медицині,
+              дизайні, освіті та наукових дослідженнях. Також він підтримує
+              ідею, що штучний інтелект має бути інструментом, який підсилює
+              людські можливості, а не замінює людину повністю.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Роль OpenAI у сучасному світі</h2>
+          <article>
+            <p>
+              Сем Альтман є генеральним директором компанії OpenAI, яка
+              розробляє передові моделі штучного інтелекту, включаючи великі
+              мовні моделі. OpenAI стала однією з ключових організацій, що
+              формують сучасний розвиток AI, зробивши технології більш
+              доступними для користувачів, бізнесу та освіти. Компанія
+              співпрацює з різними технологічними партнерами та активно
+              впроваджує інновації у сфері генеративного штучного інтелекту,
+              робототехніки та мультимодальних систем. Під керівництвом Альтмана
+              OpenAI зробила значний внесок у популяризацію AI-інструментів у
+              повсякденному житті, змінюючи підхід до роботи, навчання та
+              творчості у всьому світі.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Його перший стартап Loopt був пов’язаний із геолокацією друзів у
+                реальному часі.
+              </li>
+              <li>
+                Він інвестував у десятки технологічних компаній, включаючи
+                стартапи в сфері енергетики та біотехнологій.
+              </li>
+              <li>
+                Він часто наголошує, що штучний інтелект має допомагати людям у
+                повсякденному житті, а не бути лише складною технологією для
+                спеціалістів.
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="mask.html">Попередня постать: Ілон Маск </a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>

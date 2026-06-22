@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лінус Торвальдс — Веб-енциклопедія</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        background: #f8f9fa;
+        color: #202122;
+        line-height: 1.6;
+        font-size: 15px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #54595d;
+        color: white;
+        padding: 24px 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 28px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+
+      .sidebar h1 a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .sidebar p {
+        font-size: 13px;
+        margin-bottom: 26px;
+      }
+
+      .sidebar h2 {
+        font-size: 18px;
+        margin: 16px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #a2a9b1;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 8px;
+      }
+
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        background: #54595d;
+        border: 1px solid #a2a9b1;
+        width: 200px;
+        z-index: 10;
+      }
+
+      .menu a {
+        display: block;
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .menu a:hover {
+        background: #70757a;
+      }
+
+      .dropdown:hover .menu {
+        display: block;
+      }
+
+      .main {
+        flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 6px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 0;
+        margin: 0;
+      }
+
+      header p {
+        font-size: 13px;
+        color: #54595d;
+        margin-bottom: 12px;
+      }
+
+      header h1 {
+        font-size: 38px;
+        font-family: Georgia, serif;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+
+      .image-grid img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border: 1px solid #a2a9b1;
+
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .image-grid img:hover {
+        transform: scale(1.03);
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      section h2 {
+        font-size: 18px;
+      }
+
+      article {
+        padding: 15px 0;
+        border: none;
+        background: #f8f9fa;
+      }
+
+      article p {
+        text-indent: 20px;
+      }
+
+      article a {
+        color: #0645ad;
+      }
+
+      article ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        margin: auto 0 10px 0;
+        padding-top: 16px;
+        border-top: 1px solid #a2a9b1;
+        color: #54595d;
+        font-size: 13px;
+      }
+
+      footer a {
+        font-size: 15px;
+        color: #0645ad;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      @media (max-width: 900px) {
+        .wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-bottom: 1px solid #a2a9b1;
+        }
+
+        .main {
+          padding: 20px;
+        }
+
+        header h1 {
+          font-size: 28px;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        color: white;
+        font-size: 42px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <h1><a href="index.html">History of Computing</a></h1>
+        <p>Енциклопедія історії обчислювальної техніки</p>
+
+        <h2>Навігація</h2>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li class="dropdown">
+            <a href="postati.html">Постаті</a>
+            <ul class="menu">
+              <li>
+                <a href="section1.html"
+                  >Розділ 1. Засновники обчислювальної техніки</a
+                >
+              </li>
+              <li>
+                <a href="section2.html"
+                  >Розділ 2. Народження комп'ютерної науки</a
+                >
+              </li>
+              <li>
+                <a href="section3.html"
+                  >Розділ 3. Ера персональних комп'ютерів</a
+                >
+              </li>
+              <li><a href="section4.html">Розділ 4. Розвиток Інтернету</a></li>
+              <li>
+                <a href="section5.html"
+                  >Розділ 5. Відкрите програмне забезпечення</a
+                >
+              </li>
+              <li>
+                <a href="section6.html">Розділ 6. Сучасна цифрова епоха</a>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="jerela.html">Джерела</a></li>
+          <li><a href="pro-proekt.html">Про проєкт</a></li>
+        </ul>
+      </aside>
+
+      <main class="main" id="main">
+        <header>
+          <p>Розділ 5. Відкрите програмне забепечення</p>
+          <h1>Лінус Торвальдс</h1>
+        </header>
+
+        <div class="image-grid">
+          <img
+            src="https://uploads.sempreupdate.com.br/2025/07/7-bastidores-e-mail-linus-torvalds-linux.webp "
+          />
+          <img
+            src="https://cs14.pikabu.ru/post_img/2022/08/25/5/1661409975195565050.webp"
+          />
+          <img
+            src=" https://dev.ua/storage/images/26/49/94/81/derived/74b93e30d83b7a8982282549eb4c6beb.jpg"
+          />
+
+          <img src="https://pbs.twimg.com/media/G_zkBMMbUAMpPOf.jpg" alt=" " />
+        </div>
+
+        <section>
+          <h2>Біографія</h2>
+          <article>
+            <p>
+              Лінус Бенедикт Торвальдс народився 28 грудня 1969 року в
+              Гельсінкі, Фінляндія, у сім’ї журналістів, що забезпечило йому
+              інтелектуальне середовище та ранній доступ до технічної
+              літератури. Його дід був професором статистики, тому інтерес до
+              точних наук був у нього майже «сімейною традицією». Перші
+              експерименти з комп’ютерами Лінус почав у 1980-х роках на
+              домашньому Commodore VIC-20, де він писав прості програми мовою
+              BASIC. Згодом він отримав більш потужний комп’ютер Sinclair QL,
+              який став основною платформою для його ранніх експериментів із
+              програмуванням.
+            </p>
+            <p>
+              Під час навчання в University of Helsinki він не лише вивчав
+              інформатику, а й активно працював із операційною системою Minix,
+              створеною для навчальних цілей. Саме обмеження Minix стали
+              поштовхом до ідеї створити власну систему. У 1991 році він
+              оголосив у мережі Usenet про свій студентський проєкт, який
+              спочатку був просто «хобі-операційною системою», але швидко
+              привернув увагу розробників з усього світу. Уже перші версії Linux
+              викликали активну участь спільноти програмістів, які почали
+              покращувати код. Поступово Linux став не просто проєктом однієї
+              людини, а глобальною відкритою платформою, яку розвивають тисячі
+              розробників. Торвальдс відіграв ключову роль у координації змін і
+              підтримці стабільності ядра.
+            </p>
+            <p>
+              З часом він переїхав до США і працював у компаніях, пов’язаних із
+              розвитком Linux-екосистеми, продовжуючи керувати розробкою ядра.
+              Сьогодні Лінус Торвальдс залишається головним координатором
+              розвитку Linux і є однією з центральних фігур у світі відкритого
+              програмного забезпечення, а його система використовується в
+              серверах, смартфонах, суперкомп’ютерах і навіть у космічних
+              технологіях.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Створення Linux</h2>
+          <article>
+            <p>
+              Робота над Linux почалася у 1991 році, коли Лінус Торвальдс як
+              студент University of Helsinki вирішив створити власне ядро
+              операційної системи. Спочатку це був невеликий особистий проєкт,
+              який він описував як «хобі», без планів зробити його глобальним
+              продуктом. Торвальдс надихався системою Minix, яку використовували
+              для навчання операційним системам, але вона мала обмеження у
+              функціональності та ліцензії. Через це він вирішив написати власне
+              ядро, яке було б більш гнучким і відкритим для змін. Перші версії
+              Linux були написані мовою C і збиралися вручну на його комп’ютері.
+            </p>
+            <p>
+              Уже у вересні 1991 року він випустив першу публічну версію 0.01,
+              виклавши її в інтернеті для тестування іншими програмістами.
+              Важливим кроком стало використання ліцензії GNU GPL, яка дозволила
+              всім користувачам вільно використовувати, змінювати та поширювати
+              код. Це зробило Linux частиною екосистеми вільного програмного
+              забезпечення разом із проєктами GNU. Після публікації проєкту
+              розробники з усього світу почали надсилати виправлення, покращення
+              та нові функції. Linux швидко перетворився з індивідуального
+              проєкту на глобальну спільну розробку. З часом ядро стало
+              стабільнішим і почало використовуватися в реальних системах.
+            </p>
+            <p>
+              Уже в середині 1990-х років Linux почали застосовувати на
+              серверах, а пізніше — у суперкомп’ютерах, вбудованих пристроях і
+              мобільних системах. Сьогодні Linux є основою для Android,
+              більшості серверів Інтернету та великої кількості технологічних
+              інфраструктур по всьому світу, а його розвиток координується
+              глобальною спільнотою розробників під керівництвом Торвальдса.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Вплив на розвиток відкритого програмного забезпечення</h2>
+          <article>
+            <p>
+              Лінус Торвальдс зробив величезний внесок у розвиток руху open
+              source, довівши, що глобальна спільна розробка програмного
+              забезпечення може бути надзвичайно ефективною. Його підхід до
+              відкритого коду дозволив тисячам розробників з усього світу брати
+              участь у вдосконаленні Linux, що стало прикладом успішної
+              колективної розробки.
+            </p>
+            <p>
+              Окрім Linux, Торвальдс також створив систему контролю версій Git,
+              яка сьогодні використовується майже у всіх великих IT-проєктах.
+              Завдяки його роботі сформувалася потужна екосистема відкритого
+              програмного забезпечення, яка включає тисячі проєктів і компаній
+              по всьому світу. Сьогодні Linux є основою для операційних систем
+              Android, серверних рішень і хмарних технологій, що робить внесок
+              Торвальдса одним із найважливіших у сучасній комп’ютерній історії.
+            </p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Цікаві факти</h2>
+          <article>
+            <ul>
+              <li>
+                Лінус Торвальдс створив Linux у 1991 році як студентський проєкт
+                і спочатку не планував робити його відомим у всьому світі.
+              </li>
+              <li>
+                Перша версія Linux (0.01) була випущена у відкритий доступ у
+                вересні 1991 року через інтернет.
+              </li>
+              <li>
+                Він використовував ліцензію GNU GPL, що дозволило іншим
+                розробникам вільно вдосконалювати систему.
+              </li>
+              <li>
+                Він відомий своїм прямим стилем спілкування та вимогливістю до
+                якості коду.
+              </li>
+              <li>
+                Попри світову популярність, він продовжує особисто контролювати
+                основні зміни в коді Linux.
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <footer>
+          <a href="stolman.html">Попередня постать: Річард Столлман</a>
+          <a href="section6.html">Наступна розділ: Розділ 6</a>
+        </footer>
+      </main>
+    </div>
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <img id="fullImage" class="modal-content" alt="" />
+    </div>
+  </body>
+</html>
+
+<script>
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("fullImage");
+  const closeBtn = document.querySelector(".close");
+
+  document.querySelectorAll(".image-grid img").forEach((img) => {
+    img.addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = img.src;
+      modalImg.alt = img.alt;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+</script>
